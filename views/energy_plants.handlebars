@@ -1,0 +1,188 @@
+<h1>Energy Plant Data</h1>
+<br>
+<form id="searchplant" class="form-inline" action="/energy_plants" method="get">
+  <h3 id="colorful">Filter </h3>
+  <div class="form-group">
+    <div class="container">
+     <b id="colorful">name filter</b>
+    <br>
+     <input class="form-control mr-sm-2" type="text" name="search_string" placeholder="plant">
+  </div>
+</div>
+<div class="form-group">
+  <div class="container">
+   <b id="colorful">company filter</b>
+  <br><select class="form-control mr-sm-2" name="search_company" form="searchplant">
+    <option value="-"></option>
+      {{#each energy_companys}}
+          <option value="{{energy_company_id}}">{{energy_company_name}}</option>
+      {{/each}}
+  </select>
+  </div>
+</div>
+<div class="form-group">
+  <div class="container">
+   <b id="colorful">source filter</b>
+  <br><select class="form-control mr-sm-2" name="search_source" form="searchplant">
+    <option value="-"></option>
+      {{#each energy_sources}}
+          <option value="{{energy_source_id}}">{{energy_source_name}}</option>
+      {{/each}}
+  </select>
+  </div>
+</div>
+<div class="form-group">
+  <div class="container">
+   <b id="colorful">power min</b>
+  <br>
+  <input class="form-control mr-sm-1" type="number" name="search_power_min" placeholder="min" min="0">
+</div>
+</div>
+<div class="form-group">
+<div class="container">
+ <b id="colorful">power max</b>
+<br>
+<input class="form-control mr-sm-1" type="number" name="search_power_max" placeholder="max" min="0"  value="2e127">
+</div>
+</div>
+<div class="form-group">
+  <div class="container">
+   <b id="colorful">square feet min</b>
+  <br>
+  <input class="form-control mr-sm-1" type="number" name="search_p_square_feet_min" placeholder="min" min="0">
+</div>
+</div>
+<div class="form-group">
+<div class="container">
+ <b id="colorful">square feet max</b>
+<br>
+<input class="form-control mr-sm-1" type="number" name="search_p_square_feet_max" placeholder="max" min="0"  value="2e127">
+</div>
+</div>
+<div class="form-group">
+  <div class="container">
+   <b id="colorful">transmission filter</b>
+  <br>
+  <select class="form-control mr-sm-2" name="search_transmission" form="searchplant">
+    <option value="-"></option>
+    <option value="overhead">overhead</option>
+    <option value="underground">underground</option>
+    <option value="subtransmission">subtransmission</option>
+  </select>
+</div>
+</div>
+<div class="form-group">
+  <div class="container">
+   <b id="colorful">maintenance min</b>
+  <br>
+  <input class="form-control mr-sm-1" type="number" name="search_maintenance_min" placeholder="min" min="0">
+</div>
+</div>
+<div class="form-group">
+<div class="container">
+ <b id="colorful">maintenance max</b>
+<br>
+<input class="form-control mr-sm-1" type="number" name="search_maintenance_max" placeholder="max" min="0"  value="2e127">
+</div>
+</div>
+<div class="form-group">
+  <div class="container">
+   <b id="colorful">price min</b>
+  <br>
+  <input class="form-control mr-sm-1" type="number" name="search_energy_price_min" placeholder="min" min="0">
+</div>
+</div>
+<div class="form-group">
+<div class="container">
+ <b id="colorful">price max</b>
+<br>
+<input class="form-control mr-sm-1" type="number" name="search_energy_price_max" placeholder="max" min="0"  value="2e127">
+</div>
+</div>
+  <div class="form-group">
+    <div class="container">
+     <br>
+      <input type="submit" value="Search Plants" class="btn btn-outline-success my-2 my-sm-0">
+  </div>
+</div>
+</form>
+<br>
+<h5>Use Search Sources button without any entries to reset to the default table view</h5>
+<br>
+
+<table class="table table-striped">
+    <thead>
+        <th>id</th>
+        <th>name</th>
+        <th>source</th>
+		    <th>power output [MW]</th>
+		    <th>square feet</th>
+	      <th>transmission</th>
+		<th>maintenance cost [per year]</th>
+		<th>energy price [per kwh]</th>
+		<th>delete</th>
+		<th>edit</th>
+    </thead>
+    <tbody>
+        {{#each energy_plants}}
+        <tr>
+				<td>{{energy_plant_id}}</td>
+				<td>{{energy_plant_name}}</td>
+			    <td>{{energy_source_name}}</td>
+			    <td>{{power_output}}</td>
+			    <td>{{p_square_feet}}</td>
+			    <td>{{transmission}}</td>
+			    <td>{{maintenance_cost}}</td>
+			    <td>{{energy_price}}</td>
+            <td><button onclick="deleteEnergyPlant({{energy_plant_id}})" class="btn btn-danger"><i class ="fa fa-remove"></i></button></td>
+            <td><a href="/energy_plants/{{energy_plant_id}}"><button class="btn btn-secondary"><i class ="fa fa-edit"></i></button></a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<h1>Add Plant:</h1>
+<form id="addenergyplant" action="/energy_plants" method="post">
+    <div class="form-group">
+        name <input type="text" name="energy_plant_name"><br>
+    </div>
+    <div class="form-group">
+        associated company
+        <select name="energy_company_id">
+      {{#each energy_companys}}
+           <option value="{{energy_company_id}}">{{energy_company_name}}</option>
+       {{/each}}
+    </select><br>
+    </div>
+		<div class="form-group">
+        source
+        <select name="energy_source_id">
+      {{#each energy_sources}}
+           <option value="{{energy_source_id}}">{{energy_source_name}}</option>
+       {{/each}}
+		</select><br>
+    </div>
+   <div class="form-group">
+        power output [MW]<input type="number" name="power_output" min="0"><br>
+    </div>
+	 <div class="form-group">
+        square feet<input type="number" name="p_square_feet" min="0"><br>
+    </div>
+	<div class="form-group">
+        transmission
+		<select name="transmission" form="addenergyplant">
+		  <option value="overhead">overhead</option>
+		  <option value="underground">underground</option>
+		  <option value="subtransmission">subtransmission</option>
+		</select><br>
+    </div>
+	  <div class="form-group">
+        maintenance cost [per year]<input type="number" name="maintenance_cost" min="0"><br>
+    </div>
+    <div class="form-group">
+        energy price [per kwh]<input type="number" name="energy_price" min="0"><br>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Add" class="btn btn-primary">
+    </div>
+</form>

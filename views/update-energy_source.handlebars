@@ -1,0 +1,18 @@
+<h1>Update {{energy_source.energy_source_name}}:</h1>
+<form id="update-energy_source" action="/energy_sources" method="post">
+	 <div class="form-group">
+        name <input type="text" name="energy_source_name" value="{{energy_source.energy_source_name}}"><br>
+    </div>
+    <div class="form-group">
+        renewable
+		<select name="renewable" form="update-energy_source" value="{{energy_source.renewable}}">
+		  <option value="renewable">renewable</option>
+		  <option value="alternative">alternative</option>
+		  <option value="hydrocarbon">hydrocarbon</option>
+		</select><br>
+    </div>
+    <div class="form-group">
+        energy cost [per kwh] <input type="number" name="energy_cost" value="{{energy_source.energy_cost}}" min="0"><br>
+    </div>
+</form>
+<button class="btn btn-primary" onclick="updateEnergySource({{energy_source.energy_source_id}})">Update</button>

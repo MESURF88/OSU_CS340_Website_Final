@@ -1,0 +1,12 @@
+
+.heading_list li {
+    display: inline;
+}
+
+.colorful {
+  color: darkgreen;
+}
+
+#colorful{
+  color: darkgreen;
+}

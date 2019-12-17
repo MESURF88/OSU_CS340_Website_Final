@@ -1,0 +1,136 @@
+<h1>Building Data</h1>
+<br>
+<form id="searchbuilding" class="form-inline" action="/buildings" method="get">
+  <h3 id="colorful">Filter </h3>
+  <div class="form-group">
+    <div class="container">
+     <b id="colorful">name filter</b>
+    <br>
+     <input class="form-control mr-sm-2" type="text" name="search_string" placeholder="building">
+  </div>
+</div>
+<div class="form-group">
+  <div class="container">
+   <b id="colorful">company filter</b>
+  <br><select class="form-control mr-sm-2" name="search_company" form="searchbuilding">
+    <option value="-"></option>
+      {{#each energy_companys}}
+          <option value="{{energy_company_id}}">{{energy_company_name}}</option>
+      {{/each}}
+  </select>
+  </div>
+</div>
+<div class="form-group">
+  <div class="container">
+   <b id="colorful">square feet min</b>
+  <br>
+  <input class="form-control mr-sm-1" type="number" name="search_b_square_feet_min" placeholder="min" min="0">
+</div>
+</div>
+<div class="form-group">
+<div class="container">
+ <b id="colorful">square feet max</b>
+<br>
+<input class="form-control mr-sm-1" type="number" name="search_b_square_feet_max" placeholder="max" min="0"  value="2e127">
+</div>
+</div>
+  <div class="form-group">
+    <div class="container">
+     <b id="colorful">function filter</b>
+    <br>
+    <select class="form-control mr-sm-2" name="search_function" form="searchbuilding">
+      <option value="-"></option>
+      <option value="industrial">industrial</option>
+      <option value="residential">residential</option>
+      <option value="commercial">commerical</option>
+    </select>
+  </div>
+  </div>
+  <div class="form-group">
+    <div class="container">
+     <b id="colorful">energy consumption min</b>
+    <br>
+    <input class="form-control mr-sm-1" type="number" name="search_energy_cons_min" placeholder="min" min="0">
+  </div>
+</div>
+<div class="form-group">
+  <div class="container">
+   <b id="colorful">energy consumption max</b>
+  <br>
+  <input class="form-control mr-sm-1" type="number" name="search_energy_cons_max" placeholder="max" min="0"  value="2e127">
+</div>
+</div>
+  <div class="form-group">
+    <div class="container">
+     <br>
+      <input type="submit" value="Search Buildings" class="btn btn-outline-success my-2 my-sm-0">
+  </div>
+</div>
+</form>
+<br>
+<h5>Use Search Sources button without any entries to reset to the default table view</h5>
+<br>
+
+<table class="table table-striped">
+    <thead>
+        <th>id</th>
+        <th>name</th>
+        <th>energy company</th>
+        <th>square feet</th>
+        <th>build date</th>
+        <th>function</th>
+        <th>energy consumption [kwh per year]</th>
+		<th>delete</th>
+		<th>edit</th>
+    </thead>
+    <tbody>
+        {{#each buildings}}
+        <tr>
+            <td>{{building_id}}</td>
+            <td>{{building_name}}</td>
+            <td>{{energy_company_name}}</td>
+            <td>{{b_square_feet}}</td>
+            <td>{{formDate build_date}}</td>
+            <td>{{_function}}</td>
+            <td>{{energy_consumption}}</td>
+            <td><button onclick="deleteBuilding({{building_id}})" class="btn btn-danger"><i class ="fa fa-remove"></i></button></td>
+            <td><a href="/buildings/{{building_id}}"><button class="btn btn-secondary"><i class ="fa fa-edit"></i></button></a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<h1>Add Building:</h1>
+<form id="addbuilding" action="/buildings" method="post">
+  <div class="form-group">
+      name <input type="text" name="building_name"><br>
+  </div>
+  <div class="form-group">
+    energy company
+  <select name="energy_company_id">
+        {{#each energy_companys}}
+            <option value="{{energy_company_id}}">{{energy_company_name}}</option>
+        {{/each}}
+    </select><br>
+    </div>
+<div class="form-group">
+      square feet <input type="number" name="b_square_feet" min="0"><br>
+  </div>
+<div class="form-group">
+      build date <input type="date" name="build_date"><br>
+  </div>
+<div class="form-group">
+      function
+  <select name="_function" form="addbuilding">
+    <option value="industrial">industrial</option>
+    <option value="residential">residential</option>
+    <option value="commercial">commerical</option>
+  </select><br>
+  </div>
+  <div class="form-group">
+      energy consumption [kwh per year] <input type="number" name="energy_consumption" min="0"><br>
+  </div>
+  <div class="form-group">
+      <input type="submit" value="Add" class="btn btn-primary">
+  </div>
+</form>

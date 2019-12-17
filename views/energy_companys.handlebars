@@ -1,0 +1,88 @@
+<h1>Energy Company Data</h1>
+<br>
+<form id="searchcompany" class="form-inline" action="/energy_companys" method="get">
+  <h3 id="colorful">Filter </h3>
+  <div class="form-group">
+    <div class="container">
+     <b id="colorful">name filter</b>
+    <br>
+     <input class="form-control mr-sm-2" type="text" name="search_string" placeholder="company">
+  </div>
+</div>
+<div class="form-group">
+  <div class="container">
+   <b id="colorful">plant filter</b>
+  <br><select class="form-control mr-sm-2" name="search_plant" form="searchcompany">
+    <option value="-"></option>
+      {{#each energy_plants}}
+          <option value="{{energy_plant_id}}">{{energy_plant_name}}</option>
+      {{/each}}
+  </select>
+  </div>
+</div>
+<div class="form-group">
+  <div class="container">
+   <b id="colorful">net worth min</b>
+  <br>
+  <input class="form-control mr-sm-1" type="number" name="search_net_worth_min" placeholder="min" min="0">
+</div>
+</div>
+<div class="form-group">
+<div class="container">
+ <b id="colorful">net worth max</b>
+<br>
+<input class="form-control mr-sm-1" type="number" name="search_net_worth_max" placeholder="max" min="0"  value="2e127">
+</div>
+</div>
+  <div class="form-group">
+    <div class="container">
+     <br>
+      <input type="submit" value="Search Companies" class="btn btn-outline-success my-2 my-sm-0">
+  </div>
+</div>
+</form>
+<br>
+<h5>Use Search Sources button without any entries to reset to the default table view</h5>
+<br>
+
+<table class="table table-striped">
+    <thead>
+        <th>id</th>
+        <th>name</th>
+        <th>net worth</th>
+		<th>delete</th>
+		<th>edit</th>
+    </thead>
+    <tbody>
+        {{#each energy_companys}}
+        <tr>
+            <td>{{energy_company_id}}</td>
+            <td>{{energy_company_name}}</td>
+            <td>{{net_worth}}</td>
+            <td><button onclick="deleteEnergyCompany({{energy_company_id}})" class="btn btn-danger"><i class ="fa fa-remove"></i></button></td>
+            <td><a href="/energy_companys/{{energy_company_id}}"><button class="btn btn-secondary"><i class ="fa fa-edit"></i></button></a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<h1>Add Company:</h1>
+<form id="addenergycompany" action="/energy_companys" method="post">
+    <div class="form-group">
+        name <input type="text" name="energy_company_name"><br>
+    </div>
+    <div class="form-group">
+        associated plant
+        <select name="energy_plant_id">
+      {{#each energy_plants}}
+           <option value="{{energy_plant_id}}">{{energy_plant_name}}</option>
+       {{/each}}
+    </select><br>
+    </div>
+    <div class="form-group">
+        net worth<input type="number" name="net_worth" min="0"><br>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Add" class="btn btn-primary">
+    </div>
+</form>

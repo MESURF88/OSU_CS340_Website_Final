@@ -1,0 +1,91 @@
+<h1>Energy Source Data</h1>
+<br>
+<form id="searchenergysource" class="form-inline" action="/energy_sources" method="get">
+  <h3 id="colorful">Filter </h3>
+  <div class="form-group">
+    <div class="container">
+     <b id="colorful">name filter</b>
+    <br>
+     <input class="form-control mr-sm-2" type="text" name="search_string" placeholder="energy source">
+  </div>
+</div>
+  <div class="form-group">
+    <div class="container">
+     <b id="colorful">renewable filter</b>
+    <br>
+    <select class="form-control mr-sm-2" name="search_renewable" form="searchenergysource">
+      <option value="-"></option>
+      <option value="renewable">renewable</option>
+      <option value="alternative">alternative</option>
+      <option value="hydrocarbon">hydrocarbon</option>
+    </select><br>
+  </div>
+  </div>
+  <div class="form-group">
+    <div class="container">
+     <b id="colorful">energy cost min</b>
+    <br>
+    <input class="form-control mr-sm-1" type="number" name="search_energy_cost_min" placeholder="min" min="0">
+  </div>
+</div>
+<div class="form-group">
+  <div class="container">
+   <b id="colorful">energy cost max</b>
+  <br>
+  <input class="form-control mr-sm-1" type="number" name="search_energy_cost_max" placeholder="max" min="0"  value="2e127">
+</div>
+</div>
+  <div class="form-group">
+    <div class="container">
+     <br>
+      <input type="submit" value="Search Sources" class="btn btn-outline-success my-2 my-sm-0">
+  </div>
+</div>
+</form>
+<br>
+<h5>Use Search Sources button without any entries to reset to the default table view</h5>
+<br>
+
+<table class="table table-striped">
+    <thead>
+        <th>id</th>
+        <th>name</th>
+        <th>renewable</th>
+        <th>energy cost [per kwh]</th>
+		<th>delete</th>
+		<th>edit</th>
+    </thead>
+    <tbody>
+        {{#each energy_sources}}
+        <tr>
+            <td>{{energy_source_id}}</td>
+            <td>{{energy_source_name}}</td>
+            <td>{{renewable}}</td>
+            <td>{{energy_cost}}</td>
+            <td><button onclick="deleteEnergySource({{energy_source_id}})" class="btn btn-danger"><i class ="fa fa-remove"></i></button></td>
+            <td><a href="/energy_sources/{{energy_source_id}}"><button class="btn btn-secondary"><i class ="fa fa-edit"></i></button></a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<h1>Add Source:</h1>
+<form id="addenergysource" action="/energy_sources" method="post">
+    <div class="form-group">
+        name <input type="text" name="energy_source_name"><br>
+    </div>
+    <div class="form-group">
+        renewable
+		<select name="renewable" form="addenergysource">
+		  <option value="renewable">renewable</option>
+		  <option value="alternative">alternative</option>
+		  <option value="hydrocarbon">hydrocarbon</option>
+		</select><br>
+    </div>
+    <div class="form-group">
+        energy cost [per kwh] <input type="number" name="energy_cost" min="0"><br>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Add" class="btn btn-primary">
+    </div>
+</form>

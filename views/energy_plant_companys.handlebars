@@ -1,0 +1,19 @@
+<h1>Linked Plants and Companies</h1>
+<table class="table table-striped">
+    <thead>
+        <th>company id</th>
+        <th>company name</th>
+        <th>plant id</th>
+        <th>plant name</th>
+    </thead>
+    <tbody>
+        {{#each energy_plant_companys}}
+        <tr>
+            <td>{{energy_company_id}}</td>
+            <td>{{energy_company_name}}</td>
+            <td>{{energy_plant_id}}</td>
+            <td>{{energy_plant_name}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
